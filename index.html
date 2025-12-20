@@ -11,6 +11,35 @@
         /* --- ENHANCED VARIABLES --- */
         :root {
             /* RGB Values for Alpha Channel Usage */
+            --rgb-red: 218, 165, 32;    /* Angelic Gold */
+            --rgb-cyan: 135, 206, 235;  /* Sky Blue */
+            --rgb-purple: 230, 230, 250; /* Lavender Mist */
+            --rgb-gold: 255, 215, 0;
+
+            --bg-primary: #fdfbf7;      /* Creamy White */
+            --bg-secondary: #f0f8ff;    /* Alice Blue */
+            --card-bg: rgba(255, 255, 255, 0.65);
+            --card-border: rgba(var(--rgb-red), 0.25);
+            
+            --accent-red: rgb(var(--rgb-red));
+            --accent-cyan: rgb(var(--rgb-cyan));
+            --accent-purple: rgb(var(--rgb-purple));
+            --accent-gold: rgb(var(--rgb-gold));
+            
+            --glow-red: rgba(var(--rgb-red), 0.6);
+            --glow-cyan: rgba(var(--rgb-cyan), 0.4);
+            
+            --text-primary: #2d3748;    /* Dark Slate for contrast */
+            --text-secondary: #4a5568;
+            --text-muted: #718096;
+            
+            --font-display: 'Orbitron', monospace;
+            --font-code: 'JetBrains Mono', monospace;
+            --font-mono: 'Space Mono', monospace;
+        }
+
+        /* --- DARK MODE VARIABLES (Restoring Previous Theme) --- */
+        [data-theme="dark"] {
             --rgb-red: 255, 51, 102;
             --rgb-cyan: 0, 240, 255;
             --rgb-purple: 180, 50, 255;
@@ -21,21 +50,9 @@
             --card-bg: rgba(15, 23, 42, 0.6);
             --card-border: rgba(var(--rgb-red), 0.15);
             
-            --accent-red: rgb(var(--rgb-red));
-            --accent-cyan: rgb(var(--rgb-cyan));
-            --accent-purple: rgb(var(--rgb-purple));
-            --accent-gold: rgb(var(--rgb-gold));
-            
-            --glow-red: rgba(var(--rgb-red), 0.6);
-            --glow-cyan: rgba(var(--rgb-cyan), 0.4);
-            
             --text-primary: #f8fafc;
             --text-secondary: #94a3b8;
             --text-muted: #64748b;
-            
-            --font-display: 'Orbitron', monospace;
-            --font-code: 'JetBrains Mono', monospace;
-            --font-mono: 'Space Mono', monospace;
         }
 
         * { 
@@ -46,6 +63,11 @@
 
         html {
             scroll-behavior: smooth;
+        }
+
+        /* Smooth theme transition for all major elements */
+        body, section, nav, footer, .skill-card, .project-card, .contact-card, .form-group input, .form-group textarea, .brand, .nav-links a {
+            transition: background-color 0.4s ease, border-color 0.4s ease, color 0.4s ease, box-shadow 0.4s ease, background 0.4s ease;
         }
 
         body {
@@ -123,7 +145,7 @@
             pointer-events: none;
             z-index: -1;
             opacity: 0.4;
-            mix-blend-mode: screen;
+            mix-blend-mode: normal;
             transition: opacity 0.3s;
         }
 
@@ -136,6 +158,11 @@
             pointer-events: none;
             z-index: -1;
             opacity: 0.3;
+            mix-blend-mode: normal;
+        }
+
+        [data-theme="dark"] .cursor-aura,
+        [data-theme="dark"] .cursor-aura-secondary {
             mix-blend-mode: screen;
         }
 
@@ -238,6 +265,14 @@
             color: var(--text-secondary);
             transition: all 0.3s;
             cursor: pointer;
+            padding: 0;
+            outline: none;
+            appearance: none;
+        }
+
+        #theme-toggle {
+            background: rgba(var(--rgb-red), 0.2);
+            border-color: rgba(var(--rgb-red), 0.4);
         }
 
         .nav-social:hover {
@@ -398,7 +433,7 @@
             font-weight: 900;
             letter-spacing: -2px;
             margin-bottom: 1.5rem;
-            background: linear-gradient(135deg, #ffffff 0%, #888 100%);
+            background: linear-gradient(135deg, var(--accent-red) 0%, var(--text-primary) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             line-height: 1.1;
@@ -619,20 +654,39 @@
         .skill-icon {
             width: 60px;
             height: 60px;
-            background: linear-gradient(135deg, var(--accent-red), var(--accent-purple));
+            background: transparent;
             border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 1.8rem;
             margin-bottom: 1.5rem;
-            box-shadow: 0 10px 25px rgba(var(--rgb-red), 0.3);
+            box-shadow: none;
             transition: all 0.4s;
         }
 
         .skill-card:hover .skill-icon {
             transform: rotate(10deg) scale(1.1);
-            box-shadow: 0 15px 35px rgba(var(--rgb-red), 0.5);
+            box-shadow: none;
+        }
+
+        .skill-icon img {
+            width: 80% !important;
+            height: 80% !important;
+            filter: brightness(0.2) drop-shadow(0 0 5px rgba(var(--rgb-red), 0.4));
+            transition: all 0.4s;
+        }
+
+        [data-theme="dark"] .skill-icon img {
+            filter: brightness(0) invert(1) drop-shadow(0 0 8px rgba(var(--rgb-red), 0.6));
+        }
+
+        .skill-card:hover .skill-icon img {
+            filter: brightness(0) drop-shadow(0 0 10px rgba(var(--rgb-red), 0.8));
+        }
+
+        [data-theme="dark"] .skill-card:hover .skill-icon img {
+            filter: brightness(0) invert(1) drop-shadow(0 0 15px rgba(var(--rgb-red), 0.9));
         }
 
         .skill-header {
@@ -665,7 +719,7 @@
         }
 
         .skill-bar-container {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(0, 0, 0, 0.05);
             height: 10px;
             border-radius: 10px;
             overflow: hidden;
@@ -747,7 +801,7 @@
         .project-visual {
     padding: 0; 
     position: relative;
-    background: #000; /* This makes the empty space blend in seamlessly */
+    background: rgba(0,0,0,0.03); /* This makes the empty space blend in seamlessly */
     min-height: 300px;
     display: block;
 }
@@ -797,6 +851,7 @@
             font-size: 1.2rem;
             transition: all 0.3s;
             opacity: 0; /* Hidden by default */
+            opacity: 0.7; /* Now visible by default for easier transitioning */
         }
 
         .project-visual:hover .carousel-btn {
@@ -943,8 +998,8 @@
         .form-group textarea {
             width: 100%;
             padding: 14px 18px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(0, 0, 0, 0.1);
             border-radius: 8px;
             color: var(--text-primary);
             font-family: var(--font-code);
@@ -952,11 +1007,17 @@
             transition: all 0.3s;
         }
 
+        [data-theme="dark"] .form-group input,
+        [data-theme="dark"] .form-group textarea {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
         .form-group input:focus,
         .form-group textarea:focus {
             outline: none;
             border-color: var(--accent-red);
-            background: rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.8);
             box-shadow: 0 0 20px rgba(var(--rgb-red), 0.2);
         }
 
@@ -1032,8 +1093,12 @@
         footer {
             padding: 4rem 0;
             border-top: 1px solid rgba(var(--rgb-red), 0.2);
-            background: rgba(10, 10, 15, 0.8);
+            background: rgba(255, 255, 255, 0.8);
             backdrop-filter: blur(20px);
+        }
+
+        [data-theme="dark"] footer {
+            background: rgba(10, 10, 15, 0.8);
         }
 
         .footer-content {
@@ -1134,9 +1199,13 @@
             justify-content: space-between;
             align-items: center;
             padding-top: 2rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
             color: var(--text-muted);
             font-size: 0.85rem;
+        }
+
+        [data-theme="dark"] .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .footer-bottom a {
@@ -1344,9 +1413,19 @@
                         </svg>
                     </a>
                 </div>
-                <div class="status-badge">
-                    <div class="status-indicator"></div>
-                    <span>ONLINE</span>
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                    <button id="theme-toggle" class="nav-social" title="Toggle Theme">
+                        <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                        </svg>
+                        <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                        </svg>
+                    </button>
+                    <div class="status-badge">
+                        <div class="status-indicator"></div>
+                        <span>ONLINE</span>
+                    </div>
                 </div>
             </div>
         </nav>
@@ -1999,6 +2078,35 @@
         document.addEventListener('keydown', function(event) {
             if (event.key === "Escape" && modal.style.display === "block") {
                 closeModal();
+            }
+        });
+
+        // --- THEME TOGGLE LOGIC ---
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const sunIcon = themeToggleBtn.querySelector('.sun-icon');
+        const moonIcon = themeToggleBtn.querySelector('.moon-icon');
+        
+        // Check for saved theme preference
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            sunIcon.style.display = 'none';
+            moonIcon.style.display = 'block';
+        }
+
+        themeToggleBtn.addEventListener('click', () => {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            
+            if (currentTheme === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'light');
+                localStorage.setItem('theme', 'light');
+                sunIcon.style.display = 'block';
+                moonIcon.style.display = 'none';
+            } else {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+                sunIcon.style.display = 'none';
+                moonIcon.style.display = 'block';
             }
         });
     </script>
